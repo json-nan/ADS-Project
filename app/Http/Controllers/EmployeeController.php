@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Employee\StoreRequest;
+use App\Http\Requests\Employee\UpdateRequest;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return inertia('Employee/EmployeeIndex', [
+        return inertia('Employee/Index', [
             'employees' => Employee::paginate(15),
         ]);
     }
@@ -22,23 +24,19 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Employee/Create', [
+            'employees' => Employee::paginate(15),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
-    }
+        Employee::create($request->validated());
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Employee $employee)
-    {
-        //
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -46,22 +44,18 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return inertia('Employee/Edit', [
+            'employee' => $employee,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employee $employee)
+    public function update(UpdateRequest $request, Employee $employee)
     {
-        //
-    }
+        $employee->update($request->validated());
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Employee $employee)
-    {
-        //
+        return redirect()->route('employees.index');
     }
 }
