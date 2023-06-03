@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('employees', \App\Http\Controllers\EmployeeController::class)->except(['destroy', 'show']);
+    Route::resource('payrolls', \App\Http\Controllers\PayrollController::class)->except(['destroy', 'show']);
 });
 
 require __DIR__ . '/auth.php';
