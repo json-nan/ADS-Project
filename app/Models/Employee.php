@@ -36,14 +36,14 @@ class Employee extends Model
         return $this->dailySalary() * $days;
     }
 
-    public function calculateIsss()
+    public function calculateIsss($days)
     {
-        return $this->salary * config('payroll.isss_percentage');
+        return $this->dailySalary() * $days * config('payroll.isss_percentage');
     }
 
-    public function calculateAfp()
+    public function calculateAfp($days)
     {
-        return $this->salary * config('payroll.afp_percentage');
+        return $this->dailySalary() * $days * config('payroll.afp_percentage');
     }
 
     public function Payroll(): BelongsToMany

@@ -49,10 +49,10 @@ class PayrollController extends Controller
                 'commissions' => 0,
                 'bonuses' => 0,
                 'others' => 0,
-                'isss' => $employee->calculateIsss(),
-                'afp' => $employee->calculateAfp(),
+                'isss' => $employee->calculateIsss($workedDaysCount),
+                'afp' => $employee->calculateAfp($workedDaysCount),
                 'loans' => 0,
-                'total' => $employee->calculateSalaryForDays($workedDaysCount) - $employee->calculateIsss() - $employee->calculateAfp(),
+                'total' => $employee->calculateSalaryForDays($workedDaysCount) - $employee->calculateIsss($workedDaysCount) - $employee->calculateAfp($workedDaysCount),
             ]);
         });
 
