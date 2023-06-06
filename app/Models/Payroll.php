@@ -36,4 +36,22 @@ class Payroll extends Model
             'total',
         ]);
     }
+
+    public static function lastPayrollStats()
+    {
+        $lastPayroll = Payroll::latest()->first();
+
+        $lastPayrollStats = [
+            'name' => $lastPayroll->name,
+            'start_date' => $lastPayroll->start_date->format('Y/m/d'),
+            'end_date' => $lastPayroll->end_date->format('Y/m/d'),
+            'employees' => $lastPayroll->employees->count(),
+            'total' => $lastPayroll->employees->sum('pivot.total'),
+            'isss' => $lastPayroll->employees->sum('pivot.isss'),
+            'afp' => $lastPayroll->employees->sum('pivot.afp'),
+            'loans' => $lastPayroll->employees->sum('pivot.loans'),
+        ];
+
+        return $lastPayrollStats;
+    }
 }

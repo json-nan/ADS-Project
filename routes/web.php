@@ -21,7 +21,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+
+    $lastPayrollStats = \App\Models\Payroll::lastPayrollStats();
+
+
+    return Inertia::render('Dashboard', [
+        'lastPayrollStats' => $lastPayrollStats,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
